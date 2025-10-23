@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adopt Me - Find Your Forever Friend</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* ==================== BASE & LAYOUT ==================== */
+:root {
+    --primary-color: #ee5a24; /* Reddish-Orange */
+    --secondary-color: #ff6b6b; /* Soft Red */
+    --text-color: #1f2937;
+    --background-light: linear-gradient(to bottom right, #eff6ff, #eef2ff);
+    --background-dark: #0f172a;
+    --text-dark: #f9fafb;
+}
+
+/* Dark Mode Variables */
+.dark {
+    --text-color: #f9fafb;
+    --background-light: #0f172a;
+    --card-background: #1e293b;
+    --section-background: #1e293b;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background-light);
+    color: var(--text-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ==================== HEADER & NAVIGATION ==================== */
+header {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    padding: 1rem 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dark header {
+    background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+.logo i {
+    margin-right: 5px;
+    color: #ffdd59; /* Paw color */
+}
+
+/* Desktop Navigation */
+nav.nav-menu ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+nav.nav-menu ul li {
+    margin-left: 20px;
+}
+nav.nav-menu ul li a {
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+nav.nav-menu ul li a i {
+    margin-right: 6px;
+}
+
+nav.nav-menu ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+/* Mobile Menu Overlay */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+  }
+  .menu-overlay.active {
+    display: block;
+  }
+
+/* Theme Toggle */
+.theme-toggle {
+    background: none;
+    border: transparent;
+    color: #fff;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+.theme-toggle:hover {
+    transform: rotate(15deg) scale(1.1);
+    color: #ffdd59;
+}
+.dark .theme-toggle {
+    color: #fbc531;
+}
+
+/* ==================== MAIN SECTIONS ==================== */
+.adopt-header {
+    text-align: center;
+    padding: 4rem 1.5rem 2rem;
+    background: #fff;
+    margin-top: 0rem;
+    border-radius: 0;
+}
+.dark .adopt-header {
+    background: var(--card-background);
+}
+.adopt-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0rem;
+    margin-top: -0.5rem;
+    color: var(--primary-color);
+}
+.adopt-header p {
+    max-width: 800px;
+    margin: 0.5rem auto 0;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+section {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 2.5rem; /* Increased padding */
+    background: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.dark section {
+    background: var(--card-background);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+.dark section h2 {
+    color: var(--secondary-color);
+}
+
+/* Grid Layouts */
+.grid {
+    display: grid;
+    gap: 1.5rem; /* Increased gap */
+}
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+/* Requirements */
+.requirements .grid div {
+    background: #ecfdf5;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    color: #047857;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.dark .requirements .grid div {
+    background: #14362a;
+    color: #4ade80;
+}
+
+/* Dog Cards */
+.dog-card {
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.dark .dog-card {
+    background: #334155;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.dog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(var(--primary-color), 0.2);
+}
+.dog-card img {
+    width: 100%;
+    height: 250px; /* Increased height */
+    object-fit: cover;
+}
+.dog-card-content {
+    padding: 1.25rem;
+}
+.dog-card h3 {
+    margin: 0.5rem 0;
+    font-size: 1.4rem;
+    color: var(--primary-color);
+}
+.dark .dog-card h3 {
+    color: var(--secondary-color);
+}
+.dog-card p {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin-bottom: 0.75rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.2s;
+}
+.btn:hover {
+    background: #d44d18;
+    transform: translateY(-1px);
+}
+.dark .btn {
+    background: var(--secondary-color);
+}
+.dark .btn:hover {
+    background: #e04e4e;
+}
+
+/* Recent Adoptions */
+.adoptions {
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    color: white;
+    padding: 3rem 2.5rem;
+}
+.dark .adoptions {
+    background: linear-gradient(135deg, #4f46e5, #9333ea);
+}
+.adoptions h2 {
+    color: white;
+}
+.adoptions .grid div {
+    background: rgba(255,255,255,0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ==================== ADOPTION FORM ==================== */
+.adopt-form-section {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fff8f6;
+}
+.dark .adopt-form-section {
+    background: var(--background-dark);
+}
+
+.adopt-form-section h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+.dark .adopt-form-section h2 {
+    color: var(--secondary-color);
+}
+
+.adopt-form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: left;
+}
+.dark .adopt-form {
+    background: #334155;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.adopt-form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: var(--text-color);
+}
+
+.adopt-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 5px;
+    background: var(--card-background); /* Dark mode compatible */
+    color: var(--text-color);
+}
+
+/* ==================== CERTIFICATE POPUP ==================== */
+.certificate-popup {
+    display: none; /* Controlled by JS */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    align-items: center;
+    justify-content: center;
+    z-index: 10000; /* High Z-index */
+    padding: 1rem;
+}
+
+.certificate.fancy-cert {
+    background: #fff;
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.cert-border {
+    border: 10px solid var(--primary-color);
+    border-style: double;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cert-inner {
+    border: 1px solid #ddd;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.paw-top {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    opacity: 0.3;
+}
+
+.certificate h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin: 10px 0 20px;
+    border-bottom: 2px solid var(--secondary-color);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.certificate p {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 5px 0;
+}
+
+.certificate h2 {
+    font-size: 2.2rem;
+    color: #4b5563;
+    margin: 10px 0;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.thankyou {
+    font-style: italic;
+    margin-top: 25px !important;
+    font-size: 1rem !important;
+    color: #555 !important;
+}
+
+.cert-footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    margin-top: 40px;
+}
+
+.signature p:first-child {
+    margin-bottom: -10px;
+    font-size: 1.5rem;
+    color: #333;
+}
+.signature p:last-child {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    color: #777;
+}
+
+.logo-cert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.logo-cert i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+.logo-cert p {
+    font-weight: 600;
+    margin-top: 5px;
+    font-size: 0.9rem;
+}
+
+.cert-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.cert-actions button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* Print Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .certificate-popup, .certificate-popup * {
+        visibility: visible;
+    }
+    .certificate-popup {
+        position: static;
+        display: block;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+    }
+    .certificate.fancy-cert {
+        max-width: none;
+        width: 100%;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+    }
+    .cert-actions {
+        display: none;
+    }
+    .paw-top {
+        display: none;
+    }
+    .cert-inner {
+        padding: 10px;
+    }
+}
+
+
+/* Footer */
+.footer {
+  background-color: #111827;
+  color: #d1d5db;
+  padding: 4rem 0 1.5rem;
+  margin-top: auto;
+}
+/* Dark Mode: Footer */
+.dark .footer {
+  background-color: #0d121c;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.footer-section p,
+.footer-section a {
+  color: #bdc3c7;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.contact-list,
+.footer-links,
+.social-links,
+.list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.contact-item,
+.footer-links a,
+.social-link,
+.list-item a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact-item:hover,
+.footer-links a:hover,
+.social-link:hover,
+.list-item a:hover {
+  color: #f59431;
+}
+
+.footer-bottom {
+  border-top: 1px solid #374151;
+  padding-top: 1.5rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Back to Top Button */
+.back-to-top {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.back-to-top button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 25px;
+  background: #f37316; /* Made this orange for better visibility/contrast */
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.back-to-top button:hover {
+  background: #ff8b38;
+  transform: translateY(-2px);
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+  .footer-content {
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .footer-section {
+    align-items: center;
+  }
+
+  .social-links,
+  .footer-links,
+  .contact-list,
+  .list-item {
+    align-items: center;
+  }
+}
+/* ==================== MEDIA QUERIES (Responsiveness) ==================== */
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 1rem;
+    }
+    nav.nav-menu ul li {
+        margin-left: 15px;
+    }
+}
+
+@media (max-width: 850px) {
+    /* Hide desktop menu, show hamburger */
+    nav.nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 72px; /* Adjust based on header height */
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        z-index: 999;
+    }
+
+    .dark nav.nav-menu {
+        background: #1f2937;
+    }
+
+    nav.nav-menu.active {
+        display: flex;
+    }
+
+    nav.nav-menu ul {
+        flex-direction: column;
+        width: 100%;
+        padding: 10px 0;
+    }
+    nav.nav-menu ul li {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+    nav.nav-menu ul li a {
+        display: block;
+        padding: 12px;
+        border-radius: 0;
+        justify-content: center;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .theme-toggle {
+        margin-left: 0;
+    }
+
+    .header-content {
+        padding-right: 15px;
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+        text-align: center;
+    }
+    .footer-section {
+        align-items: center;
+    }
+    .contact-list, .footer-links, .social-links, .list-item {
+        align-items: center;
+    }
+}
+
+@media (max-width: 500px) {
+    .adopt-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo"><i class="fas fa-paw"></i> AdoptMe</div>
+      <nav class="nav-menu"> 
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="adopt.html"><i class="fas fa-dog"></i> Adopt</a></li>
+          <li><a href="donate.html"><i class="fas fa-hand-holding-heart"></i> Donate</a></li>
+          <li><a href="volunteer.html"><i class="fas fa-users"></i> Volunteer</a></li>
+          <li><a href="sponsor.html"><i class="fas fa-handshake"></i> Sponsor</a></li>
+          <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+          <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+        </ul>
+      </nav>
+      
+      <div class="hamburger"><i class="fas fa-bars"></i></div> 
+
+      <button id="theme-toggle" class="theme-toggle">
+  <i class="fas fa-moon"></i>
+</button>
+
+    </div>
+
+    <div class="header adopt-header">
+    <h1>Find Your Forever Friend</h1>
+    <p>Every dog deserves a loving home. Browse our rescued dogs and find your perfect companion.</p>
+       </div>
+
+  </header>
+
+  <div class="menu-overlay"></div>
+
+  <!-- Adoption Requirements -->
+  <section class="requirements">
+    <h2>Adoption Requirements</h2>
+    <div id="requirements-list" class="grid"></div>
+  </section>
+
+  <!-- Dogs Section -->
+  <section class="dogs">
+    <h2>Available Dogs</h2>
+    <div id="dog-list" class="grid"></div>
+  </section>
+
+  <!-- Recent Adoptions -->
+  <section class="adoptions">
+    <h2>Recent Adoptions</h2>
+    <div id="recent-adoptions" class="grid"></div>
+  </section>
+
+  <!-- Adoption Form -->
+  <section class="adopt-form-section">
+    <h2>Adoption Form</h2>
+    <form id="adoptionForm" class="adopt-form">
+      <label>Full Name</label>
+      <input type="text" id="name" required>
+
+      <label>Email</label>
+      <input type="email" id="email" required>
+
+      <label>Phone Number</label>
+      <input type="text" id="phone" required>
+
+      <label>Dog Name You Wish to Adopt</label>
+      <input type="text" id="dogName" required>
+
+      <label>Adoption Date</label>
+      <input type="date" id="date" required>
+
+      <button type="submit" class="btn">Generate Certificate</button>
+    </form>
+  </section>
+
+  <!-- Certificate Popup -->
+<div id="certificatePopup" class="certificate-popup">
+  <div class="certificate fancy-cert">
+    <div class="cert-border">
+      <div class="cert-inner">
+        <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Paw" class="paw-top">
+        <h1>Certificate of Adoption</h1>
+        <p>This certifies that</p>
+        <h2 id="certName">[Adopter Name]</h2>
+        <p>has officially adopted</p>
+        <h2 id="certDog">[Dog Name]</h2>
+        <p>on <span id="certDate">[Adoption Date]</span></p>
+        <p class="thankyou">Thank you for giving a loving home to a rescued friend 🐾</p>
+
+        <div class="cert-footer">
+          <div class="signature">
+            <p>______________________</p>
+            <p>Authorized Signature</p>
+          </div>
+          <div class="logo-cert">
+            <i class="fas fa-paw"></i>
+            <p>StreetPaws Organization</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-actions">
+      <button onclick="printCertificate()">Print / Download</button>
+      <button onclick="closeCertificate()">Close</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      
+      <div class="footer-section">
+        <div class="logo"><i class="fas fa-paw"></i> AdoptMe</div>
+        <p>
+          We are a non-profit organization dedicated to rescuing, rehabilitating, 
+          and rehoming street dogs across India.
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Emergency Contacts</h3>
+        <div class="contact-list">
+          <a href="tel:+1234567890" class="contact-item">📞 Animal Rescue: +1 234 567 890</a>
+          <a href="tel:+0987654321" class="contact-item">🚑 Emergency Vet: +1 098 765 4321</a>
+          <a href="tel:911" class="contact-item">🆘 Police: 911</a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <div class="footer-links">
+          <a href="adopt.html">Adopt</a>
+          <a href="donate.html">Donate</a>
+          <a href="volunteer.html">Volunteer</a>
+          <a href="sponsor.html">Sponsor</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="about.html">About Us</a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3>Get Involved</h3>
+        <div class="list-item">
+          <a href="volunteer.html">Become a Volunteer</a>
+          <a href="sponsor.html">Sponsor a Dog</a>
+          <a href="events.html">Events</a>
+          <a href="pet-tracker.html">Pet Tracker</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 911/1/1/3 AdoptMe Organization Office, Pet Street, Mumbai, India</p>
+        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+        <p><i class="fas fa-envelope"></i> info@adoptme.org</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Connect With Us</h3>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook"></i> Facebook</a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#" class="social-link"><i class="fab fa-x-twitter"></i> X (Twitter)</a> 
+          <a href="#" class="social-link"><i class="fab fa-youtube"></i> YouTube</a>
+          <a href="#" class="social-link"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+      </div>
+
+    </div>
+            <div class="back-to-top">
+                <button onclick="scrollToTop()">↑ Back to Top</button>
+              </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Adopt Me - Street Dog Rescue. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+  <script>
+      // Data provided in the prompt (moved to JS for easier consolidation)
+const dogs = [
+    {
+        id: 1,
+        name: 'Buddy',
+        age: '2 years',
+        breed: 'Indian Pariah',
+        gender: 'Male',
+        location: 'Mumbai',
+        image: 'https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg',
+        description: 'Friendly and energetic, loves playing with children. Fully vaccinated and health checked.'
+    },
+    {
+        id: 2,
+        name: 'Luna',
+        age: '1.5 years',
+        breed: 'Mixed',
+        gender: 'Female',
+        location: 'Delhi',
+        image: 'https://images.pexels.com/photos/1490908/pexels-photo-1490908.jpeg',
+        description: 'Gentle soul, perfect for families with other pets. Very calm and loving nature.'
+    },
+    {
+        id: 3,
+        name: 'Max',
+        age: '3 years',
+        breed: 'Indian Pariah',
+        gender: 'Male',
+        location: 'Bangalore',
+        image: 'https://images.pexels.com/photos/1851164/pexels-photo-1851164.jpeg',
+        description: 'Loyal companion, great with apartments. Well-trained and house-broken.'
+    },
+    {
+        id: 4,
+        name: 'Bella',
+        age: '6 months',
+        breed: 'Puppy Mix',
+        gender: 'Female',
+        location: 'Chennai',
+        image: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg',
+        description: 'Playful puppy full of energy. Perfect for active families who love adventure.'
+    }
+];
+
+const requirements = [
+    'Must be 18+ years old',
+    'Valid government ID (Aadhaar required)',
+    'Stable housing situation',
+    'Financial capability for pet care',
+    'Commitment to lifelong care',
+    'Home visit may be required'
+];
+
+const adoptions = [
+    { name: 'Rocky & Sharma Family', date: '2 days ago', location: 'Mumbai' },
+    { name: 'Milo & Priya Singh', date: '1 week ago', location: 'Delhi' },
+    { name: 'Daisy & Raj Patel', date: '2 weeks ago', location: 'Pune' }
+];
+
+// ==================== ELEMENT REFERENCES ==================== //
+const dogList = document.getElementById('dog-list');
+const reqList = document.getElementById('requirements-list');
+const recentList = document.getElementById('recent-adoptions');
+const form = document.getElementById("adoptionForm");
+const popup = document.getElementById("certificatePopup");
+const hamburger = document.querySelector(".hamburger");
+const navMenu = document.querySelector(".nav-menu");
+const overlay = document.querySelector(".menu-overlay");
+const themeToggle = document.getElementById("theme-toggle");
+const themeIcon = themeToggle ? themeToggle.querySelector("i") : null;
+
+// ==================== INITIAL CONTENT POPULATION ==================== //
+
+// Populate requirements
+if (reqList) {
+    reqList.innerHTML = requirements.map(r => `<div><i class="fas fa-check-circle mr-2"></i> ${r}</div>`).join('');
+}
+
+// Populate dogs
+if (dogList) {
+    dogList.innerHTML = dogs.map(dog => `
+        <div class="dog-card">
+            <img src="${dog.image}" alt="${dog.name}" />
+            <div class="dog-card-content">
+                <h3>${dog.name} <span class="text-sm font-normal text-gray-500">(${dog.gender})</span></h3>
+                <p class="text-xs">${dog.breed} • ${dog.age}</p>
+                <p>${dog.description}</p>
+                <button class="btn dog-adopt-btn" data-dog-name="${dog.name}">Adopt ${dog.name}</button>
+            </div>
+        </div>
+    `).join('');
+
+    // Attach event listeners to the new buttons
+    document.querySelectorAll('.dog-adopt-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const dogName = e.target.getAttribute('data-dog-name');
+            // Populate the form field with the dog's name and scroll to the form
+            const dogNameInput = document.getElementById("dogName");
+            if (dogNameInput) {
+                dogNameInput.value = dogName;
+                document.getElementById('adoptionForm').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+}
+
+// Populate recent adoptions
+if (recentList) {
+    recentList.innerHTML = adoptions.map(a => `
+        <div>
+            <div class="font-semibold text-xl">${a.name}</div>
+            <div class="text-sm">${a.location} • Adopted ${a.date}</div>
+        </div>
+    `).join('');
+}
+
+
+// ==================== ADOPTION FORM & CERTIFICATE LOGIC ==================== //
+
+if (form && popup) {
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const dogName = document.getElementById("dogName").value.trim();
+        const dateInput = document.getElementById("date").value;
+
+        if (!name || !dogName || !dateInput) {
+            alert("Please fill all required fields in the form!");
+            return;
+        }
+
+        // Format the date nicely for the certificate
+        const formattedDate = new Date(dateInput).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Populate certificate fields
+        document.getElementById("certName").textContent = name;
+        document.getElementById("certDog").textContent = dogName;
+        document.getElementById("certDate").textContent = formattedDate;
+
+        // Show the popup
+        popup.style.display = "flex";
+    });
+}
+
+// ==================== CERTIFICATE POPUP ACTIONS (Global Functions) ==================== //
+
+window.printCertificate = function() {
+    // 1. Get the content of the certificate
+    const certHTML = document.querySelector(".certificate.fancy-cert").innerHTML;
+    
+    // 2. Open a new window for printing
+    const printWindow = window.open("", "_blank", "height=600,width=800");
+
+    // 3. Write basic print-friendly HTML and CSS
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Adoption Certificate</title>
+            <style>
+                /* Minimal print styles to keep the certificate clean */
+                body { font-family: 'Times New Roman', serif; margin: 0; padding: 20px; }
+                .cert-border { border: 5px solid #ee5a24; padding: 20px; text-align: center; }
+                .cert-inner { border: 1px solid #ddd; padding: 20px; }
+                h1 { color: #ee5a24; font-size: 2.5rem; margin-bottom: 20px; }
+                h2 { font-size: 2rem; color: #4b5563; margin: 10px 0; }
+                p { font-size: 1.1rem; color: #333; }
+                .cert-actions { display: none; } /* Hide buttons in print view */
+                .paw-top { display: none; }
+                .cert-footer { display: flex; justify-content: space-around; margin-top: 30px; }
+            </style>
+        </head>
+        <body>
+            <div class="certificate fancy-cert">
+                ${certHTML}
+            </div>
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    printWindow.focus(); // Focus on the window to ensure print dialog appears
+    printWindow.print();
+    // printWindow.close(); // Not always necessary, sometimes confuses users
+
+    // Close the certificate popup on the main page
+    closeCertificate();
+}
+
+window.closeCertificate = function() {
+    if (popup) {
+        popup.style.display = "none";
+    }
+}
+
+// ==================== MOBILE MENU TOGGLE ==================== //
+if (hamburger) {
+    hamburger.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+        overlay.classList.toggle("active");
+    });
+}
+
+if (overlay) {
+    overlay.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+        overlay.classList.remove("active");
+    });
+}
+
+document.querySelectorAll(".nav-menu a").forEach(link =>
+    link.addEventListener("click", () => {
+        if (navMenu.classList.contains("active")) {
+            navMenu.classList.remove("active");
+            overlay.classList.remove("active");
+        }
+    })
+);
+
+// ==================== DARK MODE TOGGLE LOGIC ==================== //
+function initializeTheme() {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let initialDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+    if (initialDark) {
+        document.body.classList.add("dark");
+        if (themeIcon) {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+        }
+    } else {
+        document.body.classList.remove("dark");
+        if (themeIcon) {
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+        }
+    }
+}
+
+if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+
+        const isDark = document.body.classList.contains("dark");
+
+        if (isDark) {
+            if (themeIcon) {
+                themeIcon.classList.remove("fa-moon");
+                themeIcon.classList.add("fa-sun");
+            }
+            localStorage.setItem("theme", "dark");
+        } else {
+            if (themeIcon) {
+                themeIcon.classList.remove("fa-sun");
+                themeIcon.classList.add("fa-moon");
+            }
+            localStorage.setItem("theme", "light");
+        }
+    });
+}
+
+// Initialize theme when the page loads
+document.addEventListener('DOMContentLoaded', initializeTheme);
+
+// ==================== BACK TO TOP BUTTON (Made global on window for HTML onclick) ==================== //
+window.scrollToTop = function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+</script>
+</body>
+</html>

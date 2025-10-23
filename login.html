@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Adopt Me</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            /* Initial background for Light Mode */
+            background: #f0f2f5; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Added for header/body layout */
+            align-items: center;
+            justify-content: flex-start; /* Start below the header */
+            padding-top: 0; 
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* 🌙 DARK MODE Base Styles */
+        body.dark {
+            background: #1a1a1a;
+            color: #f8f9fa;
+        }
+
+        a { text-decoration: none; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+/* HEADER */
+header {
+    background: linear-gradient(135deg, #f18d8d, #ee5a24);
+    color: white;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Dark Mode Header */
+.dark header {
+    background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    margin-right: 0%;
+    font-size: 1.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+.logo i {
+    margin-right: 5px;
+    color: #ffdd59;
+}
+
+/* NAVIGATION */
+nav.nav-menu ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    width: 100%;
+}
+nav.nav-menu ul li {
+    margin-left: 25px;
+}
+nav.nav-menu ul li a {
+    color: white;
+    padding: 10px 15px; /* Adjusted padding */
+    border-radius: 5px; /* Added border-radius */
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+nav.nav-menu ul li a i {
+    margin-right: 6px;
+}
+nav.nav-menu ul li a:hover {
+    background: rgba(241, 141, 141, 0.7); /* Adjusted hover opacity */
+}
+
+/* ====== MOBILE HAMBURGER MENU REFINED (Media Query) ====== */
+@media (max-width: 768px) {
+    nav.nav-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(145deg, #ff6b6b, #ee5a24);
+        padding: 70px 25px 20px;
+        box-shadow: 3px 0 15px rgba(0,0,0,0.2);
+        transition: left 0.4s ease;
+        overflow-y: auto;
+    }
+
+    nav.nav-menu.active {
+        left: 0;
+    }
+
+    /* Dark Mode Mobile Menu */
+    .dark nav.nav-menu {
+        background: linear-gradient(145deg, #333333, #1a1a1a);
+    }
+
+    nav.nav-menu ul {
+        flex-direction: column;
+        gap: 12px;
+        padding: 0;
+    }
+
+    nav.nav-menu ul li {
+        width: 100%;
+    }
+
+    nav.nav-menu ul li a {
+        display: block;
+        width: 100%;
+        background: rgba(255,255,255,0.08);
+        padding: 12px 18px;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 500;
+        transition: background 0.3s ease;
+    }
+
+    nav.nav-menu ul li a:hover {
+        background: rgba(255,255,255,0.25);
+    }
+
+    .menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0,0,0,0.6);
+        z-index: 998;
+    }
+    .menu-overlay.active {
+        display: block;
+    }
+}
+
+/* HAMBURGER */
+.hamburger {
+    display: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: white;
+    margin-left: 0; /* Removed margin-left: 26% which was poorly positioned */
+}
+
+@media (max-width: 768px) {
+    /* Show hamburger and adjust alignment */
+    .hamburger {
+        display: block;
+    }
+    .header-content {
+        justify-content: space-between;
+    }
+    nav.nav-menu {
+        /* Default state */
+        display: block;
+    }
+}
+
+/* 🌗 DARK MODE TOGGLE */
+.theme-toggle {
+    background: none;
+    border: transparent;
+    color: #fff;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg) scale(1.1);
+    color: #ffdd59;
+}
+
+/* Dark mode specific */
+.dark .theme-toggle {
+    color: #fbc531; 
+}
+
+.dark .theme-toggle:hover {
+    transform: rotate(-15deg) scale(1.1);
+    color: #fff;
+}
+
+/* Icon smooth animation */
+.theme-toggle i {
+    transition: transform 0.4s ease, color 0.3s ease;
+}
+
+.dark .theme-toggle i.fa-sun {
+    color: #fbc531; 
+}
+
+/* AUTH SECTION STYLES - FIXING POSITIONING */
+section {
+    width: 100%;
+    /* Ensures the section takes up the remaining viewport height */
+    min-height: calc(100vh - 66px); 
+    display: flex;
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    padding: 20px; /* Add padding for smaller screens */
+    /* Light mode background for the main content area */
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24); 
+    transition: background 0.4s ease;
+}
+
+/* Dark Mode: Login section background override */
+.dark section {
+    background: #1a1a1a;
+}
+        
+.auth-container {
+    width: 100%;
+    max-width: 450px;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* 🌙 DARK MODE: Auth Container */
+.dark .auth-container {
+    background: #252525;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Stronger shadow for contrast */
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header i {
+    font-size: 3rem;
+    color: #ff6b6b;
+    margin-bottom: 15px;
+}
+
+.auth-header h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+    transition: color 0.4s ease;
+}
+/* 🌙 DARK MODE: Header Text */
+.dark .auth-header h1 {
+    color: #f8f9fa;
+}
+
+.auth-header p {
+    color: #666;
+    transition: color 0.4s ease;
+}
+/* 🌙 DARK MODE: Header Text */
+.dark .auth-header p {
+    color: #bbb;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    transition: color 0.4s ease;
+}
+/* 🌙 DARK MODE: Label Text */
+.dark .form-group label {
+    color: #f8f9fa;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border 0.3s, background-color 0.4s, color 0.4s;
+}
+
+/* 🌙 DARK MODE: Input Fields */
+.dark .form-control {
+    background: #333333;
+    border-color: #444;
+    color: #f8f9fa;
+}
+
+.form-control:focus {
+    border-color: #ff6b6b;
+    outline: none;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    background: #ff6b6b;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #ee5a24;
+}
+
+.form-group a {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    transition: color 0.4s ease;
+}
+/* 🌙 DARK MODE: Footer Text */
+.dark .auth-footer {
+    color: #bbb;
+}
+
+.auth-footer a {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.demo-credentials {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+    transition: background 0.4s ease;
+}
+
+/* 🌙 DARK MODE: Demo Credentials box */
+.dark .demo-credentials {
+    background: #333333;
+}
+
+.demo-credentials p {
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 0.9rem;
+    transition: color 0.4s ease;
+}
+/* 🌙 DARK MODE: Demo Credentials text */
+.dark .demo-credentials p {
+    color: #bbb;
+}
+
+.demo-credentials .credentials {
+    color: #ff6b6b;
+    font-weight: 500;
+}
+    </style>
+</head>
+<body>
+    <header>
+    <div class="container header-content">
+      <div class="logo"><i class="fas fa-paw"></i> AdoptMe</div>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="adopt.html"><i class="fas fa-dog"></i> Adopt</a></li>
+          <li><a href="donate.html"><i class="fas fa-hand-holding-heart"></i> Donate</a></li>
+          <li><a href="volunteer.html"><i class="fas fa-users"></i> Volunteer</a></li>
+          <li><a href="sponsor.html"><i class="fas fa-handshake"></i> Sponsor</a></li>
+          <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+          <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+        </ul>
+      </nav>
+      
+      <div class="hamburger"><i class="fas fa-bars"></i></div>
+
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme">
+    <i class="fas fa-moon"></i>
+</button>
+    </div>
+  </header>
+
+  <div class="menu-overlay"></div>
+
+  <section> 	
+  <div class="auth-container">
+        <div class="auth-header">
+            <i class="fas fa-paw"></i>
+            <h1>Welcome Back</h1>
+            <p>Sign in to continue your rescue mission</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="your.email@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+            
+            <div class="form-group" style="text-align: right;">
+                <a href="#">Forgot your password?</a>
+            </div>
+            
+            <button type="submit" class="btn">Sign In</button>
+        </form>
+        
+        <div class="auth-footer">
+            Don't have an account? <a href="register.html">Sign up here</a>
+        </div>
+        
+        <div class="demo-credentials">
+            <p>Demo Credentials:</p>
+            <p class="credentials">Email: <span id="demo-email">demo@adoptme.org</span> • Password: <span id="demo-password">any password</span></p>
+        </div>
+    </div>
+</section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const demoEmail = 'demo@adoptme.org'; // Defined demo email (updated in HTML/JS for consistency)
+
+            // ==================== ELEMENT REFERENCES for Menu/Theme ==================== //
+            const hamburger = document.querySelector(".hamburger");
+            const navMenu = document.querySelector(".nav-menu");
+            const overlay = document.querySelector(".menu-overlay");
+            const themeToggle = document.getElementById("theme-toggle");
+            const themeIcon = themeToggle ? themeToggle.querySelector("i") : null;
+
+
+            // ==================== DARK MODE TOGGLE LOGIC ==================== //
+            function initializeTheme() {
+                const savedTheme = localStorage.getItem("theme");
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                let initialDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+                if (initialDark) {
+                    document.body.classList.add("dark");
+                    if (themeIcon) {
+                        themeIcon.classList.remove("fa-moon");
+                        themeIcon.classList.add("fa-sun");
+                    }
+                } else {
+                    document.body.classList.remove("dark");
+                    if (themeIcon) {
+                        themeIcon.classList.remove("fa-sun");
+                        themeIcon.classList.add("fa-moon");
+                    }
+                }
+            }
+
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.body.classList.toggle("dark");
+
+                    const isDark = document.body.classList.contains("dark");
+
+                    if (isDark) {
+                        if (themeIcon) {
+                            themeIcon.classList.remove("fa-moon");
+                            themeIcon.classList.add("fa-sun");
+                        }
+                        localStorage.setItem("theme", "dark");
+                    } else {
+                        if (themeIcon) {
+                            themeIcon.classList.remove("fa-sun");
+                            themeIcon.classList.add("fa-moon");
+                        }
+                        localStorage.setItem("theme", "light");
+                    }
+                });
+            }
+
+            // Run initial theme check
+            initializeTheme();
+
+            // ==================== LOGIN FORM SUBMISSION ==================== //
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = emailInput.value.trim();
+                    const password = passwordInput.value.trim();
+                    
+                    // Client-side validation: Check if fields are filled
+                    if (!email || !password) {
+                        alert('Please enter both email and password.');
+                        return;
+                    }
+                    
+                    // Mock Authentication Logic
+                    if (email === demoEmail) {
+                        // For the demo account, any password works.
+                        alert('Login successful! Welcome, Volunteer! Redirecting to dashboard...');
+                        // Simulate a successful login and redirect
+                        // In a real app, this would be `window.location.href = 'dashboard.html';`
+                    } else if (email === 'admin@adoptme.org' && password === 'adminpass') {
+                        // Optional: Add a mock admin account
+                        alert('Admin Login successful! Redirecting to dashboard...');
+                        // In a real app, this would be `window.location.href = 'dashboard.html';`
+                    } else {
+                        // For any other login attempt (non-demo)
+                        alert('Login failed. Please check your email and password, or use the Demo Credentials: ' + demoEmail);
+                    }
+                });
+            }
+
+            // ==================== MOBILE MENU TOGGLE ==================== //
+            if (hamburger && navMenu && overlay) {
+                hamburger.addEventListener("click", () => {
+                    navMenu.classList.toggle("active");
+                    overlay.classList.toggle("active");
+                });
+
+                // Close menu when clicking overlay or any menu link
+                overlay.addEventListener("click", () => {
+                    navMenu.classList.remove("active");
+                    overlay.classList.remove("active");
+                });
+
+                document.querySelectorAll(".nav-menu a").forEach(link =>
+                    link.addEventListener("click", () => {
+                        // Only close on click if it's visible in mobile view
+                        if (window.innerWidth <= 768) { 
+                            navMenu.classList.remove("active");
+                            overlay.classList.remove("active");
+                        }
+                    })
+                );
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Adopt Me</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Allows header to sit at the top */
+            align-items: center;
+            justify-content: flex-start; /* Puts the header at the top */
+            padding: 0;
+            transition: background 0.3s;
+        }
+        
+        /* Dark Mode General */
+        body.dark {
+            background: linear-gradient(135deg, #1a1a1a, #333333);
+        }
+
+        a { text-decoration: none; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #f18d8d, #ee5a24);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Dark Mode Header */
+.dark header {
+    background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 5px;
+            color: #ffdd59;
+        }
+
+        /* NAVIGATION */
+        nav.nav-menu ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            width: 100%;
+        }
+        nav.nav-menu ul li {
+            margin-left: 15px; /* Reduced margin for better fit */
+        }
+        nav.nav-menu ul li a {
+            color: white;
+            padding: 10px 15px; /* Reduced padding for better fit */
+            border-radius: 5px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        nav.nav-menu ul li a i {
+            margin-right: 6px;
+        }
+        nav.nav-menu ul li a:hover {
+            background: rgba(241, 141, 141, 0.8);
+        }
+
+        /* ====== NAV MENU BUTTONS (Mostly redundant on this page but kept for consistency) ====== */
+        .nav-btn {
+            background: #ffffff;
+            color: #ee5a24;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 25px;
+            border: 2px solid #fff;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* HAMBURGER */
+        .hamburger {
+            display: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* 🌗 DARK MODE TOGGLE */
+        .theme-toggle {
+            background: none;
+            border: transparent;
+            color: #fff;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg) scale(1.1);
+            color: #ffdd59;
+        }
+
+        /* Dark mode specific */
+        .dark .theme-toggle {
+            color: #fbc531; /* golden sun color */
+        }
+
+        .dark .theme-toggle:hover {
+            transform: rotate(-15deg) scale(1.1);
+            color: #fff;
+        }
+
+        .theme-toggle i {
+            transition: transform 0.4s ease, color 0.3s ease;
+        }
+
+        .dark .theme-toggle i.fa-sun {
+            color: #fbc531; /* bright sun */
+        }
+        
+        /* AUTH CONTAINER STYLES (CENTERED FORM) */
+        .auth-container {
+            width: 90%;
+            max-width: 450px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 50px auto; /* Centering it below the header */
+        }
+        
+        .dark .auth-container {
+            background: #2b2b2b;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header i {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+        
+        .auth-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .dark .auth-header h1 { color: #f8f8f8; }
+
+        .auth-header p {
+            color: #666;
+        }
+        .dark .auth-header p { color: #bbb; }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        .dark .form-group label { color: #ccc; }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .dark .form-control {
+            background: #3c3c3c;
+            border-color: #555;
+            color: #fff;
+        }
+
+        .form-control:focus {
+            border-color: #ff6b6b;
+            outline: none;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            background: #ff6b6b;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #ee5a24;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        .dark .auth-footer { color: #bbb; }
+
+        .auth-footer a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .terms {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+        }
+        .dark .terms { color: #bbb; }
+        
+        .terms a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+
+        /* MOBILE MENU RESPONSIVENESS */
+        @media (max-width: 950px) { /* Changed breakpoint to hide nav on smaller desktops too */
+            nav.nav-menu {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+            .header-content {
+                padding: 0 20px;
+            }
+
+            
+    /* Dark Mode Mobile Menu */
+    .dark nav.nav-menu {
+        background: linear-gradient(145deg, #333333, #1a1a1a);
+    }
+
+        }
+        
+        /* Mobile Menu Appearance */
+        @media (max-width: 950px) {
+            nav.nav-menu {
+                display: block; /* Make sure it's block when positioned */
+                position: fixed;
+                top: 0;
+                left: -270px;
+                height: 100vh;
+                width: 250px;
+                background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+                padding-top: 60px;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+            nav.nav-menu.active { 
+                left: 0; 
+            }
+            nav.nav-menu ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            nav.nav-menu ul li {
+                width: 100%;
+                margin-left: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.15);
+            }
+            nav.nav-menu ul li a {
+                width: 100%;
+                padding: 15px 25px;
+                color: white;
+            }
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(0,0,0,0.5);
+                z-index: 998;
+            }
+            .menu-overlay.active { 
+                display: block; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo"><i class="fas fa-paw"></i> AdoptMe</div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="adopt.html"><i class="fas fa-dog"></i> Adopt</a></li>
+                    <li><a href="donate.html"><i class="fas fa-hand-holding-heart"></i> Donate</a></li>
+                    <li><a href="volunteer.html"><i class="fas fa-users"></i> Volunteer</a></li>
+                    <li><a href="sponsor.html"><i class="fas fa-handshake"></i> Sponsor</a></li>
+                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+                </ul>
+            </nav>
+            
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <i class="fas fa-paw"></i>
+            <h1>Join Our Mission</h1>
+            <p>Create your account to start helping street dogs</p>
+        </div>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="your.email@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Create a strong password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+            </div>
+            
+            <button type="submit" class="btn">Create Account</button>
+        </form>
+        
+        <div class="auth-footer">
+            Already have an account? <a href="login.html">Sign in here</a>
+        </div>
+        
+        <div class="terms">
+            By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ==================== ELEMENT REFERENCES ==================== //
+            const registerForm = document.getElementById('registerForm');
+            const hamburger = document.querySelector(".hamburger");
+            const navMenu = document.querySelector(".nav-menu");
+            const overlay = document.querySelector(".menu-overlay");
+            const themeToggle = document.getElementById("theme-toggle");
+            const themeIcon = themeToggle ? themeToggle.querySelector("i") : null;
+
+
+            // ==================== FORM SUBMISSION LOGIC ==================== //
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+                    
+                    // Simple validation
+                    if (name && email && password && confirmPassword) {
+                        if (password !== confirmPassword) {
+                            alert('Passwords do not match');
+                            return;
+                        }
+                        
+                        if (password.length < 6) {
+                            alert('Password must be at least 6 characters long');
+                            return;
+                        }
+                        
+                        // In a real app, you would send this data to a server
+                        alert('Registration successful! Redirecting to dashboard...');
+                        // Simulate redirect for successful registration
+                        // window.location.href = 'dashboard.html';
+                    } else {
+                        alert('Please fill in all fields');
+                    }
+                });
+            }
+
+
+            // ==================== MOBILE MENU TOGGLE ==================== //
+            if (hamburger && navMenu && overlay) {
+                hamburger.addEventListener("click", () => {
+                    navMenu.classList.toggle("active");
+                    overlay.classList.toggle("active");
+                });
+
+                // Close menu when clicking overlay or any menu link
+                overlay.addEventListener("click", () => {
+                    navMenu.classList.remove("active");
+                    overlay.classList.remove("active");
+                });
+
+                document.querySelectorAll(".nav-menu a").forEach(link =>
+                    link.addEventListener("click", () => {
+                        navMenu.classList.remove("active");
+                        overlay.classList.remove("active");
+                    })
+                );
+            }
+
+            // ==================== DARK MODE TOGGLE LOGIC ==================== //
+            function initializeTheme() {
+                const savedTheme = localStorage.getItem("theme");
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                let initialDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+                if (initialDark) {
+                    document.body.classList.add("dark");
+                    if (themeIcon) {
+                        themeIcon.classList.remove("fa-moon");
+                        themeIcon.classList.add("fa-sun");
+                    }
+                } else {
+                    document.body.classList.remove("dark");
+                    if (themeIcon) {
+                        themeIcon.classList.remove("fa-sun");
+                        themeIcon.classList.add("fa-moon");
+                    }
+                }
+            }
+
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.body.classList.toggle("dark");
+
+                    const isDark = document.body.classList.contains("dark");
+
+                    if (isDark) {
+                        if (themeIcon) {
+                            themeIcon.classList.remove("fa-moon");
+                            themeIcon.classList.add("fa-sun");
+                        }
+                        localStorage.setItem("theme", "dark");
+                    } else {
+                        if (themeIcon) {
+                            themeIcon.classList.remove("fa-sun");
+                            themeIcon.classList.add("fa-moon");
+                        }
+                        localStorage.setItem("theme", "light");
+                    }
+                });
+            }
+
+            // Run initial theme check
+            initializeTheme();
+        });
+    </script>
+</body>
+</html>
